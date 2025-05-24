@@ -7,7 +7,7 @@ interface NotificationProps {
     onClose: () => void;
 }
 
-export const Notification: React.FC<NotificationProps> = ({ message, type, onClose }) => {
+const Notification: React.FC<NotificationProps> = ({ message, type, onClose }) => {
     return (
         <div className={`notification ${type}`}>
             <div className="notification-content">
@@ -17,3 +17,5 @@ export const Notification: React.FC<NotificationProps> = ({ message, type, onClo
         </div>
     );
 };
+
+export {Notification};

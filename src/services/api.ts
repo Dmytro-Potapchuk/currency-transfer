@@ -227,3 +227,35 @@ export const performExchange = async (exchangeData: { fromAccountId: number; toA
 
     return await makeApiRequest(() => API.post("/Exchange/perform", exchangeData));
 };
+
+
+//Payu//
+
+export interface CreatePayUPaymentPayload {
+    accountId: number; // ID konta w naszej aplikacji, które chcemy "doładować"
+    amount: number;
+    currencyCode: string; // Musi zgadzać się z walutą konta accountId
+    description?: string;
+}
+
+export interface CreatePayUPaymentResponse {
+    orderId?: string;
+    redirectUri?: string; // URL, na który normalnie byśmy przekierowali
+    success: boolean;
+    errorMessage?: string;
+}
+
+export interface PayUPaymentStatus {
+    orderId?: string;
+    status?: string; // "PENDING", "COMPLETED", "FAILED" etc.
+    amount?: number;
+    currencyCode?: string;
+}
+
+export const createPayUPayment = async (payload: CreatePayUPaymentPayload): Promise<CreatePayUPaymentResponse> => {
+    return await makeApiRequest(() => API.post("/PayU/create-payment", payload));
+};
+
+export const getPayUPaymentStatus = async (orderId: string): Promise<PayUPaymentStatus> => {
+    return await makeApiRequest(() => API.get(`/PayU/payment-status/${orderId}`));
+};

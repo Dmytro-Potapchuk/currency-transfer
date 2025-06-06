@@ -10,6 +10,8 @@ import './App.css';
 
 import {useTranslation} from 'react-i18next';
 import {LanguageSwitcher} from './components/LanguageSwitcher';
+import DepositForm from "./components/DepositForm/DepositForm";
+import PaymentStatusPage from "./components/DepositForm/PaymentStatusPage";
 
 const Dashboard = () => {
     const {t} = useTranslation();
@@ -96,6 +98,7 @@ const Dashboard = () => {
                 }}>
                     <CurrencyConverter/>
                     <TransferForm/>
+                    <DepositForm />
                 </div>
                 <div style={{
                     marginTop: "30px",
@@ -120,10 +123,13 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/register" element={<RegisterPage/>}/>
-                <Route element={<ProtectedRoute/>}>
-                    <Route path="/*" element={<Dashboard/>}/>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                {/* Usuwamy PublicLayout stąd, PaymentStatusPage sam renderuje swój PublicHeader */}
+                <Route path="/payment-status" element={<PaymentStatusPage />} />
+
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/*" element={<Dashboard />} />
                 </Route>
             </Routes>
         </Router>

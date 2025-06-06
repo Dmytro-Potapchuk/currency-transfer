@@ -1,46 +1,92 @@
-# Getting Started with Create React App
+# Aplikacja Frontendowa do Transferu Walut
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Opis Projektu
 
-## Available Scripts
+Jest to interfejs użytkownika (frontend) stworzony w technologii React, który komunikuje się z backendowym API `CurrencyTransferAPI` w celu umożliwienia użytkownikom wykonywania operacji finansowych, takich jak transfery walut, konwersja walut i zarządzanie kontami. Aplikacja wspiera wielojęzyczność.
 
-In the project directory, you can run:
+## Technologie
 
-### `npm start`
+* **React** (v18+)
+* **TypeScript**
+* **Axios** (do zapytań HTTP do backendu)
+* **react-router-dom** (do nawigacji i routingu)
+* **i18next** & **react-i18next** (do internacjonalizacji)
+* CSS (lub preferowany sposób stylowania)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Główne Funkcjonalności
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* **Uwierzytelnianie Użytkownika:**
+    * Formularz rejestracji
+    * Formularz logowania
+* **Panel Główny (Dashboard):** Dostępny po zalogowaniu, zawierający:
+    * Konwerter walut (komunikuje się z API backendu)
+    * Formularz do tworzenia przelewów między kontami (z wyborem konta źródłowego i docelowego ID)
+    * Możliwość szybkiego tworzenia kont walutowych (USD, EUR, UAH)
+    * Wyświetlanie historii transakcji użytkownika
+* **Wielojęzyczność:**
+    * Obsługa języków: Angielski (GB), Polski (PL), Ukraiński (UA), Rosyjski (RU)
+    * Przełącznik języków z ikonami flag
 
-### `npm test`
+## Struktura Projektu (Główne Katalogi)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* `src/`
+    * `components/` - Główne komponenty React (np. `LoginPage.tsx`, `TransferForm.tsx`, `CurrencyConverter.tsx`, `TransactionList.tsx`, `LanguageSwitcher.tsx`, `PublicHeader.tsx`)
+    * `services/`
+        * `api.ts` - Konfiguracja Axios i funkcje do komunikacji z backend API.
+    * `assets/` (lub `svg/`) - Zasoby statyczne, np. ikony flag SVG.
+    * `App.tsx` - Główny komponent aplikacji, konfiguracja routingu.
+    * `index.tsx` (lub `main.tsx`) - Punkt wejścia aplikacji, inicjalizacja React i i18next.
+    * `i18n.js` - Konfiguracja i18next i pliki z tłumaczeniami.
+    * `App.css`, `index.css` - Główne pliki stylów.
 
-### `npm run build`
+## Konfiguracja i Uruchomienie
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Wymagania Wstępne
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* [Node.js](https://nodejs.org/) (zalecana wersja LTS)
+* npm (zazwyczaj instalowany z Node.js) lub yarn
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Konfiguracja
 
-### `npm run eject`
+1.  **API Backendu:**
+    * Upewnij się, że backend `CurrencyTransferAPI` jest uruchomiony i dostępny.
+    * Domyślnie frontend oczekuje, że API backendu będzie działać pod adresem `http://localhost:5033/api`. Adres ten jest skonfigurowany w `src/services/api.ts`. W razie potrzeby zmień `baseURL` w tym pliku.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Uruchomienie Projektu
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1.  Sklonuj repozytorium (jeśli dotyczy).
+2.  Otwórz terminal w głównym katalogu projektu frontendu (`currency-transfer-frontend`).
+3.  Zainstaluj zależności:
+    ```bash
+    npm install
+    ```
+    lub jeśli używasz yarn:
+    ```bash
+    yarn install
+    ```
+4.  Uruchom aplikację deweloperską:
+    ```bash
+    npm start
+    ```
+    lub jeśli używasz yarn:
+    ```bash
+    yarn start
+    ```
+    Aplikacja powinna być dostępna pod adresem `http://localhost:3000` (lub innym, jeśli port jest zajęty).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Internacjonalizacja (i18n)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Aplikacja używa `i18next` do obsługi wielu języków. Pliki tłumaczeń znajdują się bezpośrednio w konfiguracji w `src/i18n.js`. Obsługiwane języki to angielski, polski, ukraiński i rosyjski.
 
-## Learn More
+## Odniesienie do Wymagań Projektowych
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Projekt spełnia wymaganie dotyczące "Prostego frontendu", umożliwiając interakcję z API REST backendu.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## TODO / Możliwe Rozszerzenia
+
+* Bardziej zaawansowana obsługa błędów i informacji zwrotnych dla użytkownika w interfejsie.
+* Strona profilu użytkownika z możliwością aktualizacji danych (wymaga implementacji `PUT` na backendzie).
+* Możliwość usuwania kont walutowych (wymaga implementacji `DELETE` na backendzie i przemyślenia logiki biznesowej).
+* Dynamiczne ładowanie listy dostępnych walut do konwertera i formularza przelewów z API (`/api/Utils/allowed-currencies`).
+* Ulepszenie wyświetlania historii transakcji (np. filtrowanie, paginacja, wskazanie, czy transakcja jest przychodząca czy wychodząca dla danego konta).
+* Dodanie testów jednostkowych i integracyjnych dla komponentów.
